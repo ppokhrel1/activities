@@ -138,7 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public int getMax(String form_name){
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select max(entry_id) from forms where form_name='"+form_name+"'", null );
+        Cursor res =  db.rawQuery("select max(entry_id) from forms where form_name='" + form_name + "'", null);
         res.moveToFirst();
         /**if(cursor.getCount() > 0){
 
@@ -158,6 +158,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     }
+
+    public int deleteFormInstance(String form_name, int entry_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return  db.delete("forms", "form_name='?' AND  entry_id=?", new String[]{ form_name, "" + entry_id});
+//                db.delete("forms",
+//                        "id = ? ",
+//                        new String[] { Integer.toString(id) });
+
+        //return db.execSQL( "delete * from forms where form_name='"+form_name+"' and entry_id=" + entry_id, null );
+        //res.moveToFirst();
+
+    }
+
     public JSONArray getResults(){
         Cursor cursor = this.getAllData();
         JSONArray resultSet 	= new JSONArray();
